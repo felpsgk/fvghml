@@ -51,7 +51,7 @@ include 'controller/verificaLogin.php';
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboards</span></a>
+                    <span>DASHBOARD</span></a>
             </li>
 
             <!-- divisor -->
