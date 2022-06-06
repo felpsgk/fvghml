@@ -1,0 +1,53 @@
+[06-Jun-2022 18:46:41 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:41 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/index.php(219): include('/home2/hnrtco66...')
+#2 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:44 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:44 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/controller/presenca/research.php(6): require('/home2/hnrtco66...')
+#2 /home2/hnrtco66/felpsti.com.br/fvghml/escalaMedica.php(217): readMedicoList()
+#3 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:46 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:46 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/controller/presenca/research.php(120): require('/home2/hnrtco66...')
+#2 /home2/hnrtco66/felpsti.com.br/fvghml/presenca.php(436): readPresenca()
+#3 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:47 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:47 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/controller/presenca/research.php(104): require('/home2/hnrtco66...')
+#2 /home2/hnrtco66/felpsti.com.br/fvghml/atendimento.php(185): readMedicoDia()
+#3 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:47 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:47 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/controller/presenca/research.php(6): require('/home2/hnrtco66...')
+#2 /home2/hnrtco66/felpsti.com.br/fvghml/escalaMedica.php(217): readMedicoList()
+#3 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:49 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:49 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/index.php(219): include('/home2/hnrtco66...')
+#2 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
+[06-Jun-2022 18:46:57 America/Fortaleza] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 15
+[06-Jun-2022 18:46:57 America/Fortaleza] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php:17
+Stack trace:
+#0 /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php(17): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 /home2/hnrtco66/felpsti.com.br/fvghml/index.php(219): include('/home2/hnrtco66...')
+#2 {main}
+  thrown in /home2/hnrtco66/felpsti.com.br/fvghml/controller/conexao.php on line 17
