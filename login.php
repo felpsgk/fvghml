@@ -40,7 +40,7 @@ session_start();
                     <div class="col-md-6 offset-md-3">
                         <label> Usuário ou E-MAIL</label>
                         <input type="text" name="login" id="login" 
-                        class="form-control shadow-sm p-3 mb-2 bg-body rounded" placeholder=" Usuário " required="">
+                        class="form-control shadow-sm p-3 mb-2 bg-body rounded" placeholder=" Nome de usuário " required="">
                     </div>
                 </div>
                 <div class="form-group">
