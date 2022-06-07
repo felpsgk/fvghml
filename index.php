@@ -345,7 +345,7 @@ include 'controller/verificaLogin.php';
                             <div class="card shadow mb-4">
                                 <!-- cabeçalho card -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Sistemas em alta/hoje</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Sistemas em alta hoje</h6>
                                 </div>
                                 <!-- corpo card -->
                                 <div class="card-body">
@@ -360,7 +360,7 @@ include 'controller/verificaLogin.php';
                             <div class="card shadow mb-4">
                                 <!-- cabeçalho card -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Erros em alta/hoje</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Erros em alta hoje</h6>
                                     <!-- graficos de pizza 
 									<div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -391,7 +391,7 @@ include 'controller/verificaLogin.php';
                             <div class="card shadow mb-4">
                                 <!-- cabeçalho card -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Médicos em alta/hoje</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Médicos em alta hoje</h6>
                                     <!-- graficos de pizza 
 									<div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -422,7 +422,7 @@ include 'controller/verificaLogin.php';
                             <div class="card shadow mb-4">
                                 <!-- cabeçalho card -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Consolidado últimos 7 dias</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Atendimentos por dia nos últimos 7 dias</h6>
                                     <!-- 3 pontinhos opções
 									<div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
