@@ -188,7 +188,6 @@ function readPresenca()
                                 </div>
                             </div>
                         </td>
-
                         <td class="border" name="<?php echo $row['saida'] ?>">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
