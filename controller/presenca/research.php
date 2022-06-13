@@ -182,7 +182,7 @@ function readPresenca()
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <input name="chegadaForm" class="me-2" style="background-color: #858796; color: #fff;" type="checkbox" onchange="pegaHora('chegada<?php echo $row['id']; ?>')" aria-label="Checkbox for following text input">
+                                        <input class="me-2" style="background-color: #858796; color: #fff;" type="checkbox" onchange="pegaHora('chegada<?php echo $row['id']; ?>')" aria-label="Checkbox for following text input">
                                         <input name="chegada" style="background-color: #858796; color: #fff; width: 70px; text-align: center;" type="text" class="border-0 form-control" id="chegada<?php echo $row['id']; ?>" value="<?php echo $chegadaDoMedico ?>" aria-label="Text input with checkbox">
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@ function readPresenca()
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <input name="saida" class="me-2" type="checkbox" onchange="pegaHora('saida<?php echo $row['id']; ?>')" aria-label="Checkbox for following text input">
+                                        <input class="me-2" type="checkbox" onchange="pegaHora('saida<?php echo $row['id']; ?>')" aria-label="Checkbox for following text input">
                                         <input name="saida" style="background-color: #858796; color: #fff; width: 70px; text-align: center;" type="text" class="border-0 form-control" id="saida<?php echo $row['id']; ?>" value="<?php echo $saidaDoMedico ?>" aria-label="Text input with checkbox">
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@ function readPresenca()
                             <input name="mesa" style="background-color: #858796; color: #fff; width: 70px; height: 50px;" type="text" autocomplete="off" class="border-0 text-center" id="mesa" value="<?php echo $row['mesa'] ?>">
                         </td>
                         <td>
-                            <button type="submit" name="presencaForm" value="<?php echo $row['id'] ?>" class="btn btn-sm btn-info">Atualizar</a>
+                            <button type="submit" id="presencaForm" name="presencaForm" value="<?php echo $row['id'] ?>" class="btn btn-sm btn-info">Atualizar</a>
                         </td>
                     </form>
                 </tr>

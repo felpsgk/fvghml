@@ -1,6 +1,43 @@
 <?php
 //session_start();
 include 'controller/verificaLogin.php';
+switch ($_SESSION['perfil']) {
+    case 'ENFERMEIROvis':
+        echo '<style type="text/css">
+        #fromAtendimento {
+            display: none;
+            }
+            #btnAtt {
+                display: none;
+            }
+            #btnDel {
+                display: none;
+            }
+            #cadMedico {
+                display: none;
+            }
+            </style>';
+        break;
+    case 'ENFERMEIROadm':
+        echo '<style type="text/css">
+            #fromAtendimento {
+                display: none;
+            }
+            #btnAtt {
+                display: none;
+            }
+            #btnDel {
+                display: none;
+            }
+            </style>';
+        break;
+    case 'TI':
+        break;
+    case 'ADMINISTRADOR':
+        break;
+    case 'MASTER':
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,7 +115,7 @@ include 'controller/verificaLogin.php';
                     <i class="fas fa-ticket-alt"></i>
                     <span>Atendimentos</span></a>
             </li>
-            <li class="nav-item">
+            <li id="cadMedico" class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#medicoModal">
                     <i class="fa-solid fa-address-card"></i>Cadastrar médico</a>
             </li>
@@ -164,7 +201,7 @@ include 'controller/verificaLogin.php';
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Registro de atendimentos</h1>
 
-                    <form action="controller/atendimento/insert.php" name="fromAtendimento" method="post">
+                    <form action="controller/atendimento/insert.php" id="fromAtendimento" name="fromAtendimento" method="post">
                         <!-- linha medico -->
                         <div class="row">
                             <!-- linha nome -->
@@ -376,8 +413,30 @@ include 'controller/verificaLogin.php';
                                 </form>
                                 <script>
                                     $(document).ready(function() {
+                                        $.datepicker.regional['pt-BR'] = {
+                                            closeText: 'Fechar',
+                                            prevText: '&#x3c;Anterior',
+                                            nextText: 'Pr&oacute;ximo&#x3e;',
+                                            currentText: 'Hoje',
+                                            monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                                                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                                            ],
+                                            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+                                            ],
+                                            dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                                            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                            dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                            weekHeader: 'Sm',
+                                            dateFormat: 'dd/mm/yy',
+                                            firstDay: 0,
+                                            isRTL: false,
+                                            showMonthAfterYear: false,
+                                            yearSuffix: ''
+                                        };
+                                        $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
                                         $.datepicker.setDefaults({
-                                            dateFormat: 'yy-mm-dd'
+                                            dateFormat: 'yy-mm-dd',
                                         })
                                         $(function() {
                                             $("#diaInicio").datepicker();

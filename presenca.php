@@ -1,6 +1,26 @@
 <?php
-//session_start();
+//session_start();presencaForm
 include 'controller/verificaLogin.php';
+switch ($_SESSION['perfil']) {
+    case 'ENFERMEIROvis':
+        echo '<style type="text/css">
+        #presencaForm {
+            display: none;
+            }
+            #cadMedico {
+                display: none;
+            }
+            </style>';
+        break;
+    case 'ENFERMEIROadm':
+        break;
+    case 'TI':
+        break;
+    case 'ADMINISTRADOR':
+        break;
+    case 'MASTER':
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,7 +98,7 @@ include 'controller/verificaLogin.php';
                     <i class="fas fa-ticket-alt"></i>
                     <span>Atendimentos</span></a>
             </li>
-            <li class="nav-item">
+            <li id="cadMedico" class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#medicoModal">
                     <i class="fa-solid fa-address-card"></i>Cadastrar médico</a>
             </li>
@@ -170,35 +190,6 @@ include 'controller/verificaLogin.php';
                                 url: "controller/presenca/update.php",
                                 method: "POST",
                                 data: $(this).serialize(),
-                                dataType: "json",
-                                success: function(data) {
-                                    if (data[0] == true) {
-                                        $("#success").html('Medico ' + data[1] + ' atualizado com sucesso');
-                                        $("#success").show();
-                                        setTimeout(function() {
-                                            $("#success").hide();
-                                        }, 5000);
-                                    }
-                                }
-                            })
-                        });
-                    });
-                </script>
-                <!-- DELETA CRM -->
-                <script>
-                    $(document).ready(function(e) {
-                        //e.preventDefault();
-                        $('.delete').on('submit', function(e) {
-                            e.preventDefault();
-                            $("#alert").css('display', 'none');
-                            console.log("Botão Clicado delete!");
-                            $.ajax({
-                                url: "controller/presenca/update.php",
-                                method: "POST",
-                                data: {
-                                    "tipoPost": "delete",
-                                    "dadosMedico": $(this).serialize()
-                                },
                                 dataType: "json",
                                 success: function(data) {
                                     if (data[0] == true) {
@@ -393,8 +384,30 @@ include 'controller/verificaLogin.php';
                                         <button type="submit" form="fromExcel" id="export" name="export" class="col-12 mt-2 shadow-sm btn btn-success bg-gradient">Gerar excel</button>
                                         <script>
                                             $(document).ready(function() {
+                                                $.datepicker.regional['pt-BR'] = {
+                                                    closeText: 'Fechar',
+                                                    prevText: '&#x3c;Anterior',
+                                                    nextText: 'Pr&oacute;ximo&#x3e;',
+                                                    currentText: 'Hoje',
+                                                    monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                                                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                                                    ],
+                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+                                                    ],
+                                                    dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                    weekHeader: 'Sm',
+                                                    dateFormat: 'dd/mm/yy',
+                                                    firstDay: 0,
+                                                    isRTL: false,
+                                                    showMonthAfterYear: false,
+                                                    yearSuffix: ''
+                                                };
+                                                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
                                                 $.datepicker.setDefaults({
-                                                    dateFormat: 'yy-mm-dd'
+                                                    dateFormat: 'yy-mm-dd',
                                                 })
                                                 $(function() {
                                                     $("#dia").datepicker();

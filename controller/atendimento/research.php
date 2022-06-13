@@ -128,10 +128,10 @@ function readAtendimento()
                 <td scope="" class="border" style="white-space: nowrap"><?php echo $row['ti'] ?></td>
 
                 <td>
-                    <button type="submit" id="" name="atualizaatendimento" class="btn btn-sm btn-info">Atualizar</a>
+                    <button type="submit" id="btnAtt" name="atualizaatendimento" class="btn btn-sm btn-info">Atualizar</a>
                 </td>
 
-                <td><button type="submit" id="" name="deletaatendimento" class="btn btn-sm btn-danger">Excluir</button></td>
+                <td><button type="submit" id="btnDel" name="deletaatendimento" class="btn btn-sm btn-danger">Excluir</button></td>
             </form>
         </tr>
 

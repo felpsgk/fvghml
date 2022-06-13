@@ -1,6 +1,31 @@
 <?php
 //session_start();
 include 'controller/verificaLogin.php';
+switch ($_SESSION['perfil']) {
+    case 'ENFERMEIROvis':
+        echo '<style type="text/css">
+        #cadMedico {
+            display: none;
+        }
+        #updateMedicoBtn {
+            display: none;
+        }
+            </style>';
+        break;
+    case 'ENFERMEIROadm':
+        break;
+    case 'TI':
+        echo '<style type="text/css">
+        #updateMedicoBtn {
+            display: none;
+        }
+            </style>';
+        break;
+    case 'ADMINISTRADOR':
+        break;
+    case 'MASTER':
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -80,7 +105,7 @@ include 'controller/verificaLogin.php';
                     <i class="fas fa-ticket-alt"></i>
                     <span>Atendimentos</span></a>
             </li>
-            <li class="nav-item">
+            <li id="cadMedico" class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#medicoModal">
                     <i class="fa-solid fa-address-card"></i>Cadastrar médico</a>
             </li>
@@ -430,7 +455,7 @@ include 'controller/verificaLogin.php';
                                             <div class="row">
                                                 <div class="alert alert-success" id="success" style="display:none"></div>
                                                 <input type="hidden" id="ti" name="ti" value="<?php echo $_SESSION['usuario']; ?>"></input>
-                                                <button type="submit" id="updateMedico" name="updateMedico" class="col-12 mt-2 shadow-sm btn btn-success bg-gradient">salvar</button>
+                                                <button type="submit" id="updateMedicoBtn" name="updateMedico" class="col-12 mt-2 shadow-sm btn btn-success bg-gradient">salvar</button>
                                             </div>
                                         </div>
                                     </div>

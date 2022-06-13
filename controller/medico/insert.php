@@ -39,6 +39,7 @@ $diaEscolhido = $_POST["diaEscolhido"];
 $data = array(
     ':crm'  => $_POST["crm"],
     ':medico'  => $_POST["medico"],
+    ':andar'  => $_POST["andar"],
     ':publico'  => $_POST["publico"],
     ':turno'  => $_POST["txtTurno"],
     ':obs'  => $_POST["txtObs"],
@@ -58,8 +59,8 @@ $medico = $stmt->fetch();
 //echo $medico['especialidade'];
 //echo $medico['modalidade'];
 
-$sqlold = "INSERT INTO presenca (crm, medico, especialidade, modalidade, publico, turno, obs, ti, plantao) 
-VALUES (:crm,:medico,'" . $medico['especialidade'] . "','" . $medico['modalidade'] . "',:publico,:turno,:obs,:ti,'" . $diaEscolhido . "')";
+$sqlold = "INSERT INTO presenca (crm, medico, especialidade, modalidade, andar, publico, turno, obs, ti, plantao) 
+VALUES (:crm,:medico,'" . $medico['especialidade'] . "','" . $medico['modalidade'] . "',:andar,:publico,:turno,:obs,:ti,'" . $diaEscolhido . "')";
 
 //echo $sqlold;
 
@@ -71,6 +72,7 @@ if ($statement->execute($data)) {
         'medico'  => $_POST["medico"],
         'especialidade'  => $medico['especialidade'],
         'modalidade'  => $medico['modalidade'],
+        'andar'  => $_POST['andar'],
         'publico'  => $_POST["publico"],
         'obs'  => $_POST["txtObs"],
         'dia' => $diaEscolhido

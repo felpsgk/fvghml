@@ -7,7 +7,7 @@ session_start();
 //mysqli_query($strcon, $sql);
 unset($_SESSION['usuario']);
 
-header('Location: login.php');
+header('Location: ../login.php');
 exit();
 
 ?>

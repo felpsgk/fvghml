@@ -1,6 +1,32 @@
 <?php
 //session_start();
 include 'controller/verificaLogin.php';
+
+switch ($_SESSION['perfil']) {
+    case 'ENFERMEIROvis':
+        echo '<style type="text/css">
+            #cardInsereEscala {
+                display: none;
+            }
+            #cadMedico {
+                display: none;
+            }
+            </style>';
+        break;
+    case 'ENFERMEIROadm':
+        break;
+    case 'TI':
+        echo '<style type="text/css">
+                #cardInsereEscala {
+                    display: none;
+                }
+                </style>';
+        break;
+    case 'ADMINISTRADOR':
+        break;
+    case 'MASTER':
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,6 +56,8 @@ include 'controller/verificaLogin.php';
 <body id="page-top">
 
     <!-- Page Wrapper -->
+
+
     <div id="wrapper">
 
         <!-- Barra lateral -->
@@ -78,7 +106,7 @@ include 'controller/verificaLogin.php';
                     <i class="fas fa-ticket-alt"></i>
                     <span>Atendimentos</span></a>
             </li>
-            <li class="nav-item">
+            <li id="cadMedico" class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#medicoModal">
                     <i class="fa-solid fa-address-card"></i>Cadastrar médico</a>
             </li>
@@ -196,7 +224,7 @@ include 'controller/verificaLogin.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div id="cardInsereEscala" class="col">
                                     <!-- seleção do medico -->
                                     <div class="row">
                                         <div class="col card shadow ps-0 pe-0 mb-4 border border-success">
@@ -233,8 +261,8 @@ include 'controller/verificaLogin.php';
 
                                                     <div class="row">
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
-                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsAndar" id="publico" placeholder="Escolha um publico" name="publico" required="">
-                                                            <label for="publico">Defina o andar</label>
+                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsAndar" id="andar" placeholder="Escolha um andar" name="andar" required="">
+                                                            <label for="andar">Defina o andar</label>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -256,13 +284,27 @@ include 'controller/verificaLogin.php';
                                                         <datalist id="datalistOptionsPublico">
                                                             <option id="EXTERNO" value="EXTERNO">EXTERNO</option>
                                                             <option id="REGULADA" value="REGULADA">REGULADA</option>
+                                                            <option id="APOIO" value="APOIO">APOIO</option>
                                                         </datalist>
                                                     </div>
                                                     <div class="row">
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
-                                                            <input type="text" class="form-control shadow-sm" name="txtTurno" required="required" placeholder="Período de trabalho (ex.: 08h as 18h)">
-                                                            <label for="txtTurno">Período de trabalho</label>
+                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionstxtTurno" id="txtTurno" placeholder="Escolha um publico" name="txtTurno" required="">
+                                                            <label for="txtTurno">Escolha um período ou digite um específico</label>
                                                         </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <datalist id="datalistOptionstxtTurno">
+                                                            <option id="08h as 14h" value="08h as 14h"></option>
+                                                            <option id="08h as 16h" value="08h as 16h"></option>
+                                                            <option id="08h as 18h" value="08h as 18h"></option>
+                                                            <option id="08h as 20h" value="08h as 20h"></option>
+                                                            <option id="10h as 22h" value="10h as 22h"></option>
+                                                            <option id="14h as 18h" value="14h as 18h"></option>
+                                                            <option id="14h as 20h" value="14h as 20h"></option>
+                                                            <option id="14h as 22h" value="14h as 22h"></option>
+                                                            <option id="16h as 22h" value="16h as 22h"></option>
+                                                        </datalist>
                                                     </div>
                                                     <div class="row">
                                                         <div class="ps-0 pe-0 form-floating">
@@ -274,13 +316,34 @@ include 'controller/verificaLogin.php';
                                                     <div id="sucesso" class="row">
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
                                                             <input autocomplete="off" type="text" form="inserir" class="form-control mt-2 shadow-sm" id="diaEscolhido" name="diaEscolhido" required="required" placeholder="Escolha uma data">
-                                                            <label for="diaEscolhido">Período de trabalho</label>
+                                                            <label for="diaEscolhido">Dia de plantão</label>
                                                         </div>
                                                         <script>
                                                             $(document).ready(function() {
-
+                                                                $.datepicker.regional['pt-BR'] = {
+                                                                    closeText: 'Fechar',
+                                                                    prevText: '&#x3c;Anterior',
+                                                                    nextText: 'Pr&oacute;ximo&#x3e;',
+                                                                    currentText: 'Hoje',
+                                                                    monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                                                                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                                                                    ],
+                                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                                                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+                                                                    ],
+                                                                    dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                                    weekHeader: 'Sm',
+                                                                    dateFormat: 'dd/mm/yy',
+                                                                    firstDay: 0,
+                                                                    isRTL: false,
+                                                                    showMonthAfterYear: false,
+                                                                    yearSuffix: ''
+                                                                };
+                                                                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
                                                                 $.datepicker.setDefaults({
-                                                                    dateFormat: 'yy-mm-dd'
+                                                                    dateFormat: 'yy-mm-dd',
                                                                 })
                                                                 $(function() {
                                                                     $("#diaEscolhido").datepicker();
@@ -353,7 +416,7 @@ include 'controller/verificaLogin.php';
         </div>
 
         <div class="ps-0 pe-0 mb-2 form-floating">
-            <input type="text" name="diaEspecifico" class="form-control mt-2 shadow-sm" id="diaEspecifico" placeholder="Escolha uma data para visualizar abaixo">
+            <input autocomplete="off" type="text" name="diaEspecifico" class="form-control mt-2 shadow-sm" id="diaEspecifico" placeholder="Escolha uma data para visualizar abaixo">
             <label for="diaEspecifico">Escolha uma data para visualizar abaixo</label>
         </div>
         <script>
