@@ -1,18 +1,19 @@
 <?php
 
 
-if (isset($_POST['deletar'])) {
+if (isset($_POST['id'])) {
 
 
 
-    require 'controller/conexao.php';
+    require '../../controller/conexao.php';
 
     $idmedico = $_POST['id'];
-    $nome = $_POST['medico'];
+    $nome = $_POST['nome'];
 
     $sql = "DELETE FROM presenca WHERE id = '$idmedico';";
 
     //echo $sql;
+    //echo $nome;
 
     $queryrodou = mysqli_query($strcon, $sql);
 

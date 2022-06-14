@@ -41,6 +41,9 @@ switch ($_SESSION['perfil']) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.js"></script>
+
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/black-tie/jquery-ui.css">
     <title>Registro de presença</title>
 
@@ -194,12 +197,12 @@ switch ($_SESSION['perfil']) {
                     <!-- linha nome e local -->
 
 
-                    <form id="inserir" name="inserir" method="post">
-                        <!-- coluna nome e local -->
+                    <!-- coluna nome e local -->
+                    <div class="row">
                         <div class="col">
                             <div class="row">
-                                <div class="col">
-                                    <div class="card shadow bg-white p-3 mb-2 rounded border border-success">
+                                <div class="card shadow bg-white p-3 mb-2 rounded border border-success">
+                                    <div class="col">
                                         <div class="row">
                                             <div class="col table-responsive">
                                                 <table id="dataTable" class="table bg-secondary bg-gradient rounded text-white" width="100%" cellspacing="0">
@@ -224,12 +227,14 @@ switch ($_SESSION['perfil']) {
                                         </div>
                                     </div>
                                 </div>
-                                <div id="cardInsereEscala" class="col">
-                                    <!-- seleção do medico -->
-                                    <div class="row">
-                                        <div class="col card shadow ps-0 pe-0 mb-4 border border-success">
+                            </div>
+                            <!-- seleção do medico -->
+                            <div class="row">
+                                <div class="col ">
+                                    <form id="inserir" name="inserir" method="post">
+                                        <div class="card shadow ps-0 pe-0 mb-4 border border-success">
                                             <div class="card-header py-3">
-                                                <h6 class="mb-0 font-weight-bold text-success">Escala</h6>
+                                                <h6 class="mb-0 font-weight-bold text-success text-center">Criação da escala</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="container">
@@ -237,7 +242,7 @@ switch ($_SESSION['perfil']) {
 
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
                                                             <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptions" id="medico" placeholder="Digite nome ou CRM" name="medico" required="" onchange="myFunction()">
-                                                            <label for="publico">Nome ou CRM</label>
+                                                            <label for="medico">Nome ou CRM</label>
                                                         </div>
                                                         <datalist id="datalistOptions">
                                                             <?php
@@ -261,8 +266,8 @@ switch ($_SESSION['perfil']) {
 
                                                     <div class="row">
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
-                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsAndar" id="andar" placeholder="Escolha um andar" name="andar" required="">
-                                                            <label for="andar">Defina o andar</label>
+                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsAndar" id="andarC" placeholder="Escolha um andar" name="andar" required="">
+                                                            <label for="andarC">Defina o andar</label>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -276,7 +281,7 @@ switch ($_SESSION['perfil']) {
 
                                                     <div class="row">
                                                         <div class="ps-0 pe-0 mb-2 form-floating">
-                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsPublico" id="publico" placeholder="Escolha um publico" name="publico" required="">
+                                                            <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsPublico" id="publicoC" placeholder="Escolha um publico" name="publico" required="">
                                                             <label for="publico">Defina o público</label>
                                                         </div>
                                                     </div>
@@ -319,55 +324,19 @@ switch ($_SESSION['perfil']) {
                                                             <label for="diaEscolhido">Dia de plantão</label>
                                                         </div>
                                                         <script>
-                                                            $(document).ready(function() {
-                                                                $.datepicker.regional['pt-BR'] = {
-                                                                    closeText: 'Fechar',
-                                                                    prevText: '&#x3c;Anterior',
-                                                                    nextText: 'Pr&oacute;ximo&#x3e;',
-                                                                    currentText: 'Hoje',
-                                                                    monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
-                                                                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-                                                                    ],
-                                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                                                                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-                                                                    ],
-                                                                    dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
-                                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                                                    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                                                    weekHeader: 'Sm',
-                                                                    dateFormat: 'dd/mm/yy',
-                                                                    firstDay: 0,
-                                                                    isRTL: false,
-                                                                    showMonthAfterYear: false,
-                                                                    yearSuffix: ''
-                                                                };
-                                                                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
-                                                                $.datepicker.setDefaults({
-                                                                    dateFormat: 'yy-mm-dd',
-                                                                })
-                                                                $(function() {
-                                                                    $("#diaEscolhido").datepicker();
-                                                                });
-                                                                $('#inserir').on('submit', function(event) {
-                                                                    event.preventDefault();
-                                                                    $.ajax({
-                                                                        url: "controller/medico/insert.php",
-                                                                        method: "POST",
-                                                                        data: $(this).serialize(),
-                                                                        dataType: "json",
-                                                                        success: function(data) {
-                                                                            if (data.crm) {
-                                                                                $('#alertsucesso').remove();
-                                                                                var html = '<div class="mt-2 alert alert-success" id="alertsucesso" role="alert"> ' + data.medico + ' cadastrado no dia ' + data.dia + '</div>';
-                                                                                $('#sucesso').append(html);
-                                                                                //$('#inserir')[0].reset();
-                                                                            }
-                                                                        }
-                                                                    })
-
-                                                                });
-
+                                                            $('#diaEscolhido').datetimepicker({
+                                                                lang: 'pt-BR',
+                                                                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                                                                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                                                                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                                nextText: 'Próximo',
+                                                                prevText: 'Anterior',
+                                                                format: 'Y-m-d',
+                                                                timepicker: false
                                                             });
+                                                            $.datetimepicker.setLocale('pt-BR');
                                                         </script>
                                                     </div>
                                                     <div class="row">
@@ -379,23 +348,381 @@ switch ($_SESSION['perfil']) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
+                                </div>
+                                <div class="col">
+                                    <form id="updatePresenca" class="updatePresenca" name="updatePresenca" method="post">
+                                        <div class="card shadow ps-0 pe-0 mb-4 border border-success">
+                                            <div class="card-header py-3">
+                                                <h6 class="mb-0 font-weight-bold text-center text-success">Atualização da escala</h6>
+                                            </div>
+                                            <!-- CORPO DO CARD  -->
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="ps-0 pe-0 mb-2 form-floating">
+                                                                <input autocomplete="off" type="text" name="diaAgenda" class="form-control mt-2 shadow-sm" id="diaAgenda" placeholder="Escolha uma data para visualizar abaixo">
+                                                                <label for="diaAgenda">Escolha uma data para visualizar abaixo</label>
+                                                            </div>
+                                                            <div class="col ps-0 pe-0 mb-2 form-floating">
+                                                                <input autocomplete="off" type="text" class="form-control shadow-sm" list="datalistOptionsMedicoAtt" id="medicoAtt" placeholder="Digite nome ou CRM" name="medicoAtt" required="">
+                                                                <label for="medicoAtt">Nome ou CRM</label>
+                                                            </div>
+                                                            <datalist id="datalistOptionsMedicoAtt">
+
+                                                            </datalist>
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $.datepicker.regional['pt-BR'] = {
+                                                                        closeText: 'Fechar',
+                                                                        prevText: '&#x3c;Anterior',
+                                                                        nextText: 'Pr&oacute;ximo&#x3e;',
+                                                                        currentText: 'Hoje',
+                                                                        monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                                                                            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                                                                        ],
+                                                                        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                                                            'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+                                                                        ],
+                                                                        dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                                                                        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                                        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                                        weekHeader: 'Sm',
+                                                                        dateFormat: 'dd/mm/yy',
+                                                                        firstDay: 0,
+                                                                        isRTL: false,
+                                                                        showMonthAfterYear: false,
+                                                                        yearSuffix: ''
+                                                                    };
+                                                                    $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+                                                                    $.datepicker.setDefaults({
+                                                                        dateFormat: 'yy-mm-dd',
+                                                                    })
+                                                                    $(function() {
+                                                                        $("#diaAgenda").datepicker();
+                                                                    });
+                                                                    $("#diaAgenda").change(function(e) {
+                                                                        $("#nomeTxtDiv").css("display", "none");
+                                                                        $("#modalidadeTxtDiv").css("display", "none");
+                                                                        diaAgenda = $("#diaAgenda").val();
+                                                                        //$("#diaExcel").val(data);
+                                                                        e.preventDefault();
+                                                                        $.ajax({
+                                                                            url: "controller/presenca/research.php",
+                                                                            method: "POST",
+                                                                            data: $(this).serialize(),
+                                                                            dataType: "json",
+                                                                            success: function(data) {
+                                                                                $("#datalistOptionsMedicoAtt").empty();
+                                                                                document.getElementById('medicoAtt').value = '';
+                                                                                for (var i = 0; i < data.length; i++) {
+                                                                                    $("#datalistOptionsMedicoAtt").append("<option value='" +
+                                                                                        data[i]['medico'] + "'>" + data[i]['crm'] + "</option>");
+                                                                                }
+                                                                            },
+                                                                            error: function() {
+                                                                                document.getElementById('datalistOptionsMedicoAtt').innerHTML = '';
+                                                                                document.getElementById('nome').value = '';
+                                                                                document.getElementById('andar').value = '';
+                                                                                document.getElementById('sala').value = '';
+                                                                                document.getElementById('mesa').value = '';
+                                                                                document.getElementById('turno').value = '';
+                                                                                document.getElementById('chegada').value = '';
+                                                                                document.getElementById('saida').value = '';
+                                                                                document.getElementById('publico').value = '';
+                                                                                document.getElementById('intervalo').value = '';
+                                                                                document.getElementById('plantao').value = '';
+                                                                                document.getElementById('obsTxt').value = '';
+                                                                                document.getElementById('medicoAtt').value = 'Nada encontrado';
+
+                                                                            }
+                                                                        })
+                                                                    })
+                                                                    $('#medicoAtt').change(function(e) {
+                                                                        e.preventDefault();
+                                                                        $.ajax({
+                                                                            url: "controller/presenca/research.php",
+                                                                            method: "POST",
+                                                                            data: {
+                                                                                "dia": $('#diaAgenda').val(),
+                                                                                "json": $(this).val()
+                                                                            },
+                                                                            dataType: "json",
+                                                                            success: function(data) {
+                                                                                $("#idcrmmedicoDel").val(data['id']);
+                                                                                $("#idcrmmedico").val(data['id']);
+                                                                                $("#nome").val(data['medico']);
+                                                                                $("#modalidade").val(data['modalidade']);
+                                                                                $("#especialidade").val(data['especialidade']);
+                                                                                $("#andar").val(data['andar']);
+                                                                                $("#sala").val(data['sala']);
+                                                                                $("#mesa").val(data['mesa']);
+                                                                                $("#turno").val(data['turno']);
+                                                                                $("#chegada").val(data['chegada']);
+                                                                                $("#saida").val(data['saida']);
+                                                                                $("#publico").val(data['publico']);
+                                                                                $("#intervalo").val(data['intervalo']);
+                                                                                $("#plantao").val(data['plantao']);
+                                                                                $("#obsTxt").val(data['obs']);
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                })
+                                                            </script>
+
+                                                        </div>
+                                                    </div>
+                                                    <!-- divisor -->
+                                                    <hr class="sidebar-divisor mt-2 mb-2">
+                                                    <input type="hidden" id="idcrmmedico" name="idcrmmedico" value=""></input>
+                                                    <div class="row">
+                                                        <p class="h4 mb-2 text-center" id="">Dados a serem atualizados</p>
+                                                        <div class="col">
+                                                            <div class="ps-0 pe-0 mb-2 form-floating">
+                                                                <input maxlength="128" type="text" class="form-control shadow-sm" id="nome" name="nome" required="required" placeholder="nome">
+                                                                <label for="nome">Nome</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="sidebar-divisor mb-1">
+                                                    <div class="row">
+                                                        <h5 class="h4 mb-2 text-center" id="">Local</h5>
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="andar" placeholder="mv" name="andar">
+                                                                <label class="ml-2" for="andar">Andar</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="sala" placeholder="usuario" name="sala">
+                                                                <label class="ml-2" for="sala">Sala</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="mesa" placeholder="usuario" name="mesa">
+                                                                <label class="ml-2" for="mesa">Mesa</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-2 form-floating">
+                                                            <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="turno" placeholder="certificado" name="turno">
+                                                            <label class="ml-2" for="turno">Período de trabalho</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="5" autocomplete="off" type="text" class="form-control shadow-sm" id="chegada" placeholder="usuario" name="chegada">
+                                                                <label class="ml-2" for="chegada">Chegada</label>
+                                                            </div>
+                                                            <script>
+                                                                $('#chegada').datetimepicker({
+                                                                    lang: 'pt-BR',
+                                                                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                                                                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                                    nextText: 'Próximo',
+                                                                    prevText: 'Anterior',
+                                                                    datepicker: false,
+                                                                    format: 'H:i'
+                                                                });
+                                                                $.datetimepicker.setLocale('pt-BR');
+                                                            </script>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="5" autocomplete="off" type="text" class="form-control shadow-sm" id="saida" placeholder="usuario" name="saida">
+                                                                <label class="ml-2" for="saida">Saída</label>
+                                                            </div>
+                                                            <script>
+                                                                $('#saida').datetimepicker({
+                                                                    lang: 'pt-BR',
+                                                                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                                                                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                                    nextText: 'Próximo',
+                                                                    prevText: 'Anterior',
+                                                                    datepicker: false,
+                                                                    format: 'H:i'
+                                                                });
+                                                                $.datetimepicker.setLocale('pt-BR');
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="mb-2 form-floating">
+                                                                    <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="publico" placeholder="plataforma" name="publico">
+                                                                    <label class="ml-2" for="publico">Público</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="mb-2 form-floating">
+                                                                    <input maxlength="128" autocomplete="off" type="text" class="form-control shadow-sm" id="intervalo" placeholder="plataforma" name="intervalo">
+                                                                    <label class="ml-2" for="intervalo">Intervalo</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="attMedicoData" class="row">
+                                                        <div class="col">
+                                                            <div class="mb-2 form-floating">
+                                                                <input maxlength="10" autocomplete="off" type="text" class="form-control shadow-sm" id="plantao" placeholder="usuario" name="plantao">
+                                                                <label class="ml-2" for="plantao">Plantão</label>
+                                                            </div>
+                                                            <script>
+                                                                $('#plantao').datetimepicker({
+                                                                    lang: 'pt-BR',
+                                                                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                                                                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                                                                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                                    nextText: 'Próximo',
+                                                                    prevText: 'Anterior',
+                                                                    format: 'Y-m-d',
+                                                                    timepicker: false
+                                                                });
+                                                                $.datetimepicker.setLocale('pt-BR');
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row ps-2 pe-2">
+                                                                <div class="ps-0 pe-0 form-floating">
+                                                                    <textarea maxlength="512" autocomplete="off" class="form-control shadow-sm" placeholder="Alguma observação?" id="obsTxt" name="obsTxt"></textarea>
+                                                                    <label for="obsTxt">Alguma observação?</label>
+                                                                    <p class="small text-end"><span class="caracteres">512</span> Restantes</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="sucesso2" class="row">
+                                                        <div class="alert alert-success" id="successEscala" style="display:none"></div>
+                                                        <input type="hidden" id="ti" name="ti" value="<?php echo $_SESSION['usuario']; ?>"></input>
+                                                        <button type="submit" id="updateEscalaBtn" name="updateEscala" class="col-6 mt-2 shadow-sm btn btn-success bg-gradient">salvar</button>
+                                                        <button id="deleteEscalaBtn" name="deleteEscala" class="col-6 mt-2 shadow-sm btn btn-danger bg-gradient">Deletar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <input type="hidden" id="idcrmmedicoDel" name="idcrmmedicoDel" value=""></input>
+                                    <script>
+                                        $('#deleteEscalaBtn').click(function(event) {
+                                            event.preventDefault();
+                                            if (confirm('Deletar medico?')) {
+                                                $.ajax({
+                                                    url: "controller/presenca/delete.php",
+                                                    method: "POST",
+                                                    data: {
+                                                        "id": $('#idcrmmedicoDel').val(),
+                                                        "nome": $('#nome').val()
+                                                    },
+                                                    dataType: "json",
+                                                    success: function(data) {
+                                                        location.reload();
+                                                    }
+                                                })
+                                            } else {
+
+                                            }
+                                        });
+                                    </script>
                                 </div>
                             </div>
-
                         </div>
-                    </form>
-                    <!--CONTA CARACTERES RESTANTES-->
-                    <script>
-                        $(document).on("input", "#txtObs", function() {
-                            var limite = 512;
-                            var caracteresDigitados = $(this).val().length;
-                            var caracteresRestantes = limite - caracteresDigitados;
-                            $(".caracteresEscala").text(caracteresRestantes);
-                        });
-                    </script>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('#inserir').on('submit', function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "controller/medico/insert.php",
+                        method: "POST",
+                        data: $(this).serialize(),
+                        dataType: "json",
+                        success: function(data) {
+                            if (data.crm) {
+                                $('#alertsucesso').remove();
+                                var html = '<div class="mt-2 alert alert-success" id="alertsucesso" role="alert"> ' + data.medico + ' cadastrado no dia ' + data.dia + '</div>';
+                                $('#sucesso').append(html);
+                                //$('#inserir')[0].reset();
+                            }
+                        }
+                    })
 
-                    <!-- FIM DA ROW 
+                });
+            </script>
+            <script>
+                $('#updatePresenca').on('submit', function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "controller/presenca/update.php",
+                        method: "POST",
+                        data: $(this).serialize(),
+                        dataType: "json",
+                        success: function(data) {
+                            $('#alertsucesso').remove();
+                            var html = '<div class="mt-2 alert alert-success" id="alertsucesso" role="alert"> ' + data[1] + ' atualizado</div>';
+                            $('#sucesso2').append(html);
+                            document.getElementById('nome').value = '';
+                            document.getElementById('andar').value = '';
+                            document.getElementById('sala').value = '';
+                            document.getElementById('mesa').value = '';
+                            document.getElementById('turno').value = '';
+                            document.getElementById('chegada').value = '';
+                            document.getElementById('saida').value = '';
+                            document.getElementById('publico').value = '';
+                            document.getElementById('intervalo').value = '';
+                            document.getElementById('plantao').value = '';
+                            document.getElementById('obsTxt').value = '';
+                            //$('#inserir')[0].reset();
+
+                        }
+                    })
+
+                });
+            </script>
+        </div>
+    </div>
+    </div>
+
+    </div>
+    </form>
+    <!--CONTA CARACTERES RESTANTES-->
+    <script>
+        $(document).on("input", "#txtObs", function() {
+            var limite = 512;
+            var caracteresDigitados = $(this).val().length;
+            var caracteresRestantes = limite - caracteresDigitados;
+            $(".caracteresEscala").text(caracteresRestantes);
+        });
+    </script>
+    <!--CONTA CARACTERES RESTANTES-->
+    <script>
+        $(document).on("input", "#obsTxt", function() {
+            var limite = 512;
+            var caracteresDigitados = $(this).val().length;
+            var caracteresRestantes = limite - caracteresDigitados;
+            $(".caracteres").text(caracteresRestantes);
+        });
+    </script>
+
+    <!-- FIM DA ROW 
                     <div class="col">
                         <div class="card shadow ps-0 pe-0 mb-4 border border-success">
                             <div class="card-header bg-success">
@@ -408,43 +735,43 @@ switch ($_SESSION['perfil']) {
                     </div>
                     nome e local-->
 
-                </div>
+    </div>
 
 
-            </div>
+    </div>
 
-        </div>
+    </div>
 
-        <div class="ps-0 pe-0 mb-2 form-floating">
-            <input autocomplete="off" type="text" name="diaEspecifico" class="form-control mt-2 shadow-sm" id="diaEspecifico" placeholder="Escolha uma data para visualizar abaixo">
-            <label for="diaEspecifico">Escolha uma data para visualizar abaixo</label>
-        </div>
-        <script>
-            $(document).ready(function() {
-                $.datepicker.setDefaults({
-                    dateFormat: 'yy-mm-dd'
-                })
-                $(function() {
-                    $("#diaEspecifico").datepicker();
-                });
-                $("#diaEspecifico").change(function() {
-                    var data = $("#diaEspecifico").val();
-                    //$("#diaExcel").val(data);
-                    $.ajax({
-                        url: 'controller/presenca/research.php',
-                        method: "GET",
-                        data: {
-                            atualizarEscala: data
-                        },
-                        success: function(data) {
-                            $('#dataTable').html(data);
-                        }
-
-                    })
-
-                })
+    <div class="ps-0 pe-0 mb-2 form-floating">
+        <input autocomplete="off" type="text" name="diaEspecifico" class="form-control mt-2 shadow-sm" id="diaEspecifico" placeholder="Escolha uma data para visualizar abaixo">
+        <label for="diaEspecifico">Escolha uma data para visualizar abaixo</label>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd'
+            })
+            $(function() {
+                $("#diaEspecifico").datepicker();
             });
-        </script>
+            $("#diaEspecifico").change(function() {
+                var data = $("#diaEspecifico").val();
+                //$("#diaExcel").val(data);
+                $.ajax({
+                    url: 'controller/presenca/research.php',
+                    method: "GET",
+                    data: {
+                        atualizarEscala: data
+                    },
+                    success: function(data) {
+                        $('#dataTable').html(data);
+                    }
+
+                })
+
+            })
+        });
+    </script>
     </div>
     <a class="scroll-to-top rounded" href="#page-top">
 
@@ -641,7 +968,6 @@ switch ($_SESSION['perfil']) {
 
     <!-- Page level plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>

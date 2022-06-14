@@ -2,7 +2,7 @@
 function readMedico()
 {
     require 'controller/conexao.php';
-    $sql = "SELECT medico, crm FROM medico;";
+    $sql = "SELECT medico, crm FROM medico GROUP BY medico;";
     //echo $sql;
     $result = mysqli_query($strcon, $sql);
     //echo $result;

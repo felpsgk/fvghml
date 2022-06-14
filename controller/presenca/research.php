@@ -59,7 +59,73 @@ if (isset($_POST["medico"])) {
     echo json_encode($output);
 }
 
-function readMedicoListGestDados()
+if (isset($_POST["diaAgenda"])) {
+    require '../../controller/conexao.php';
+    $dia = $_POST["diaAgenda"];
+    //$dia = date("Y-m-d");
+
+    $sql = "SELECT * FROM presenca WHERE plantao LIKE '$dia%' GROUP BY medico;";
+    //echo $sql;
+    $result = mysqli_query($strcon, $sql);
+    //echo $sql;
+    //$result = mysqli_query($strcon, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+        $arr[] = $row;
+    }
+    //    select id, medico, cartaovacina, cartaodevacina from medico where cartaovacina <> "" OR cartaodevacina <> "";
+    echo json_encode($arr);
+}
+
+if (isset($_POST["dia"])) {
+    require '../../controller/conexao.php';
+
+    $nomemedico = $_POST["json"];
+    $dia = $_POST["dia"];
+
+    $sql = "SELECT * FROM presenca WHERE medico = '$nomemedico' AND plantao LIKE '$dia%' GROUP BY medico;";
+    //echo $sql;
+    //$output = "";
+    $result = mysqli_query($strcon, $sql);
+    //echo $sql;
+    $result = mysqli_query($strcon, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+        $date = new DateTime($row['plantao']);
+        $chegada = "";
+        $saida = "";
+        if ($row['chegada'] != null) {
+            $hourIn = new DateTime($row['chegada']);
+            $chegada = $hourIn->format('H:i');
+        }
+        if ($row['saida'] != null) {
+            $hourOut = new DateTime($row['saida']);
+            $saida = $hourOut->format('H:i');
+        }
+
+
+        $dia = $date->format('Y-m-d');
+
+        $output = array(
+            'id' => $row['id'],
+            'medico'  => $row['medico'],
+            'modalidade'  => $row['modalidade'],
+            'especialidade'  => $row['especialidade'],
+            'andar'  => $row['andar'],
+            'sala'  => $row['sala'],
+            'mesa'  => $row['mesa'],
+            'turno'  => $row['turno'],
+            'chegada'  => $chegada,
+            'saida'  => $saida,
+            'publico'  => $row['publico'],
+            'intervalo'  => $row['intervalo'],
+            'plantao'  => $dia,
+            'obs'  => $row['obs'],
+        );
+    }
+    //    select id, medico, cartaovacina, cartaodevacina from medico where cartaovacina <> "" OR cartaodevacina <> "";
+    echo json_encode($output);
+}
+
+function readMedicoGestDados()
 {
     require 'controller/conexao.php';
 
@@ -241,7 +307,7 @@ function readPresenca()
     <?php
     if (isset($_GET['atualizarPresenca'])) {
 
-        include '../../controller/conexao.php';
+        require '../../controller/conexao.php';
 
         $dia = $_GET['atualizarPresenca'];
 
@@ -302,7 +368,7 @@ function readPresenca()
     if (isset($_GET['atualizarEscala'])) {
 
 
-        include '../../controller/conexao.php';
+        require '../../controller/conexao.php';
 
         $dia = $_GET['atualizarEscala'];
 
