@@ -116,9 +116,19 @@ switch ($_SESSION['perfil']) {
                 Gestão de dados
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="medicoRPA.php">
+                <a class="nav-link" href="medico.php">
                     <i class="fa-solid fa-user-doctor"></i>
-                    <span>Médico RPA</span></a>
+                    <span>Médico</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="intercorrencia.php">
+                <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Intercorrências</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="relatorio.php">
+                <i class="fa-solid fa-file-lines"></i>
+                    <span>Relatório da enfermagem</span></a>
             </li>
             <!-- divisor -->
             <hr class="sidebar-divisor bg-success">

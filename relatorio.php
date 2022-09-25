@@ -4,34 +4,22 @@ include 'controller/verificaLogin.php';
 switch ($_SESSION['perfil']) {
     case 'ENFERMEIROvis':
         echo '<style type="text/css">
-        #fromAtendimento {
+        #cadMedico {
             display: none;
-            }
-            #btnAtt {
-                display: none;
-            }
-            #btnDel {
-                display: none;
-            }
-            #cadMedico {
-                display: none;
-            }
+        }
+        #updateMedicoBtn {
+            display: none;
+        }
             </style>';
         break;
     case 'ENFERMEIROadm':
-        echo '<style type="text/css">
-            #fromAtendimento {
-                display: none;
-            }
-            #btnAtt {
-                display: none;
-            }
-            #btnDel {
-                display: none;
-            }
-            </style>';
         break;
     case 'TI':
+        echo '<style type="text/css">
+        #updateMedicoBtn {
+            display: none;
+        }
+            </style>';
         break;
     case 'ADMINISTRADOR':
         break;
@@ -56,7 +44,7 @@ switch ($_SESSION['perfil']) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.js"></script>
 
-    <title>Registro de atendimento</title>
+    <title>Relatório da enfermagem</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/css/all.min.css" rel="stylesheet" type="text/css">
@@ -64,6 +52,8 @@ switch ($_SESSION['perfil']) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -113,7 +103,7 @@ switch ($_SESSION['perfil']) {
                     <i class="fas fa-fw fa-user-check"></i>
                     <span>Presentes hoje</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="atendimento.php">
                     <i class="fas fa-ticket-alt"></i>
                     <span>Atendimentos</span></a>
@@ -138,12 +128,12 @@ switch ($_SESSION['perfil']) {
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="intercorrencia.php">
-                <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
                     <span>Intercorrências</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="relatorio.php">
-                <i class="fa-solid fa-file-lines"></i>
+                    <i class="fa-solid fa-file-lines"></i>
                     <span>Relatório da enfermagem</span></a>
             </li>
             <!-- divisor -->
@@ -177,8 +167,7 @@ switch ($_SESSION['perfil']) {
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow border border-success">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -211,10 +200,24 @@ switch ($_SESSION['perfil']) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Registro de atendimentos</h1>
+                    <!-- Page cabeçalho -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-4 text-gray-800">Gestão de dados</h1>
+                        <form id="geraRelatorio" action="controller/excel/geraRelatorio.php" name="fromExcel" method="GET">
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <div class="col mt-2 d-flex justify-content-end">
+                                    <button class="btn btn-success" type="submit" name="export" id="geraRelatorio" style="background-color:#198754;">
+                                        Gerar relatório do dia
+                                        <i class="fa-regular fa-file-excel"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-                    <form action="controller/atendimento/insert.php" id="fromAtendimento" name="fromAtendimento" method="post">
+                    <!-- linha nome e local -->
+
+                    <form action="controller/relatorios.php" id="insertRelatorio" name="insertRelatorio" method="post">
                         <!-- linha medico -->
                         <div class="row">
                             <!-- linha nome -->
@@ -223,30 +226,42 @@ switch ($_SESSION['perfil']) {
                                 <!-- seleção do medico -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Médico</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Responsáveis pelo plantão</h6>
                                     </div>
                                     <div class="card-body">
                                         <div id="rownome" class="row mb-2">
                                             <div class="col">
-                                                <input class="form-control shadow-sm" autocomplete="off" list="datalistOptionsDia" id="medico" placeholder="Digite o nome nome medico" name="medico" required="required" onchange="myFunctionDia()">
-                                                <datalist id="datalistOptionsDia">
-                                                    <?php
-                                                    require 'controller/presenca/research.php';
-                                                    readMedicoDia();
-                                                    ?>
-                                                    <input type="hidden" id="txtcrm" name="crm" value=""></input>
-                                                    <script>
-                                                        function myFunctionDia() {
-                                                            //PEGA A ID DO INPUT
-                                                            var val = document.getElementById('medico').value;
-                                                            //PEGA O ID DA OPÇÃO SELECIONADA
-                                                            var text = $('#datalistOptionsDia').find('option[value="' + val + '"]').attr('id');
-                                                            //alert(text);
-                                                            //PEGA O CRM E GUARDA NO HIDDEN PARA SALVAR NA TABELA
-                                                            document.getElementById("txtcrm").value = text;
-                                                        }
-                                                    </script>
-                                                </datalist>
+                                                <input class="form-control shadow-sm" autocomplete="off" id="enf1" placeholder="Digite o nome de um dos enfermeiros presentes" name="enf1" required="required">
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="turnoenf1" placeholder="Digite o turno deste enfermeiro" name="turnoenf1" required="required">
+                                            </div>
+                                        </div>
+                                        <hr class="sidebar-divisor bg-success">
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="enf2" placeholder="Digite o nome de um dos enfermeiros presentes" name="enf2" required="required">
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="turnoenf2" placeholder="Digite o turno deste enfermeiro" name="turnoenf2" required="required">
+                                            </div>
+                                        </div>
+                                        <hr class="sidebar-divisor bg-success">
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="ti1" placeholder="Digite o nome de um dos TI presentes" name="ti1" required="required">
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="turnoti1" placeholder="Digite o turno deste TI" name="turnoti1" required="required">
+                                            </div>
+                                        </div>
+                                        <hr class="sidebar-divisor bg-success">
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="ti2" placeholder="Digite o nome de um dos TI presentes" name="ti2" required="required">
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="turnoti2" placeholder="Digite o turno deste TI" name="turnoti2" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -260,287 +275,109 @@ switch ($_SESSION['perfil']) {
                                 <!-- seleção do sistema -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Sistema</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Dashboard Gerencial</h6>
                                     </div>
                                     <div class="card-body">
-                                        <input class="form-control shadow-sm" autocomplete="off" list="datalistOptionsSis" id="sistema" placeholder="Digite o sistema" name="sistema" required="required" onchange="myFunctionDia()">
-                                        <datalist id="datalistOptionsSis">
-                                            <?php
-                                            require 'controller/sistema/research.php';
-                                            readSistema();
-                                            ?>
-                                            <!--
-                                            <input type="hidden" id="txtcrm" name="crm" value=""></input>
-                                            <script>
-                                            function myFunctionDia() {
-                                                //PEGA A ID DO INPUT
-                                                var val = document.getElementById('medico').value;
-                                                //PEGA O ID DA OPÇÃO SELECIONADA
-                                                var text = $('#datalistOptionsDia').find('option[value="' + val + '"]').attr('id');
-                                                //alert(text);
-                                                //PEGA O CRM E GUARDA NO HIDDEN PARA SALVAR NA TABELA
-                                                document.getElementById("txtcrm").value = text;
-                                            }
-                                            </script>-->
-                                        </datalist>
+                                        <div class="row">
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalHorarios" placeholder="Quantos horários disponibilizados?" name="totalHorarios" required="required">
+                                            </div>
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalClientes" placeholder="Quantos clientes com sucesso?" name="totalClientes" required="required">
+                                            </div>
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalSSucesso" placeholder="Quantos clientes sem sucesso?" name="totalSSucesso" required="required">
+                                            </div>
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalNAtendidos" placeholder="Quantos clientes não atendidos?" name="totalNAtendidos" required="required">
+                                            </div>
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalAbsent" placeholder="Quantos clientes absenteísmo?" name="totalAbsent" required="required">
+                                            </div>
+                                            <div class="row ms-1 mb-2">
+                                                <input class="form-control shadow-sm" autocomplete="off" id="totalLivre" placeholder="Quantos horários livres?" name="totalLivre" required="required">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- coluna erro -->
                             <div class="col">
                                 <!-- seleção do sistema -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Erro</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <input class="form-control shadow-sm" autocomplete="off" list="datalistOptionsErr" id="erro" placeholder="Digite o erro" name="erro" required="required" onchange="myFunctionDia()">
-                                        <datalist id="datalistOptionsErr">
-                                            <?php
-                                            require 'controller/erro/research.php';
-                                            readErro();
-                                            ?>
-                                            <!--
-                                            <input type="hidden" id="txtcrm" name="crm" value=""></input>
-                                            <script>
-                                            function myFunctionDia() {
-                                                //PEGA A ID DO INPUT
-                                                var val = document.getElementById('medico').value;
-                                                //PEGA O ID DA OPÇÃO SELECIONADA
-                                                var text = $('#datalistOptionsDia').find('option[value="' + val + '"]').attr('id');
-                                                //alert(text);
-                                                //PEGA O CRM E GUARDA NO HIDDEN PARA SALVAR NA TABELA
-                                                document.getElementById("txtcrm").value = text;
-                                            }
-                                            </script>-->
-                                        </datalist>
+                                <div class="row">
+                                    <div class="card shadow ">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Registro de ponto</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="row ms-1 mb-2">
+                                                    <input class="form-control shadow-sm" autocomplete="off" id="qtdAtrasos" placeholder="Quantos médicos registraram plantão a tempo?" name="qtdAtrasos" required="required">
+                                                </div>
+                                                <div class="row ms-1 mb-2">
+                                                    <input class="form-control shadow-sm" autocomplete="off" id="qtdFaltas" placeholder="Quantos médicos faltaram?" name="qtdFaltas" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- linha criticidade -->
-                        <div class="row">
-                            <!-- coluna criticidade -->
-                            <div class="col">
-                                <!-- seleção do criticidade -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Criticidade</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="criticidade" class="row mb-2">
-                                            <div class="btn-group" role="criticidade" aria-label="Basic radio toggle button group">
-                                                <input type="radio" class="btn-check" name="btnradioCrit" value="BAIXA" id="btnRadBaixa" required="required" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnRadBaixa">Baixa</label>
-
-                                                <input type="radio" class="btn-check" name="btnradioCrit" value="MEDIA" id="btnRadMedia" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnRadMedia">Media</label>
-
-                                                <input type="radio" class="btn-check" name="btnradioCrit" value="ALTA" id="btnRadAlta" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnRadAlta">Alta</label>
-                                            </div>
+                                <div class="row">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-body">
+                                            <input type="hidden" id="acao" name="acao" value="inserir"></input>
+                                            <button type="submit" class="col-12 mb-1 shadow-sm btn btn-success bg-gradient">salvar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- linha descrição e solução -->
-                        <div class="row">
-                            <!-- coluna descrição -->
-                            <div class="col">
-                                <!-- texto do criticidade -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Descrição do erro</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <input type="text" class="form-control shadow-sm" id="txtDescErro" name="txtDescErro" aria-describedby="emailHelp" required="required" placeholder="Descrição do erro">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- coluna solução -->
-                            <div class="col">
-                                <!-- texto do criticidade -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Solução para o erro</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <input type="text" class="form-control shadow-sm" id="txtSolErro" name="txtSolErro" aria-describedby="emailHelp" required="required" placeholder="Solução do erro">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- linha status -->
-                        <div class="row">
-                            <!-- coluna status -->
-                            <div class="col">
-                                <!-- seleção do status -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Status</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="criticidade" class="row mb-2">
-                                            <div class="btn-group" role="solucao" aria-label="Basic radio toggle button group">
-                                                <input type="radio" class="btn-check" name="btnradioSol" value="RESOLVIDO" id="btnRes" required="required" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnRes">Resolvido</label>
-
-                                                <input type="radio" class="btn-check" name="btnradioSol" value="RESOLVIDO PALIATIVO" id="btnResPal" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnResPal">Resolvido paliativo</label>
-
-                                                <input type="radio" class="btn-check" name="btnradioSol" value="EM ANALISE" id="btnAnalise" autocomplete="off">
-                                                <label class="btn btn-outline-success" for="btnAnalise">Em análise</label>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="ti" name="ti" value="<?php echo $_SESSION['usuario']; ?>"></input>
-                                        <button type="submit" name="submit" class="col-12 mb-1 shadow-sm btn btn-success bg-gradient">salvar</button>
-                                    </div>
-                                </div>
-                            </div>
                     </form>
                 </div>
-                <!-- linha excel gera -->
-                <div class="row">
-                    <!-- coluna excel gera -->
-                    <div class="col">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Gerar relatório entre datas específicas</h6>
-                            </div>
-                            <div class="card-body">
-                                <form id="geraExcelAtendimento" action="controller/excel/geraExcelAtendimento.php" name="fromExcel" method="GET">
-                                    <div class="row mb-2">
-                                        <div class="col">
-                                            <input type="text" required="" autocomplete="off" name="diaInicio" id="diaInicio" class="form-control shadow-sm " placeholder="Escolha a data inicial">
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" required="" autocomplete="off" name="diaFim" id="diaFim" class="form-control shadow-sm " placeholder="Escolha a data final">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="submit" name="export" id="geraExcel" value="Gerar Excel" class="col-12 mb-1 shadow-sm btn btn-success bg-gradient">
-                                        </div>
-                                    </div>
-                                </form>
-                                <script>
-                                    $(document).ready(function() {
-                                        $.datepicker.regional['pt-BR'] = {
-                                            closeText: 'Fechar',
-                                            prevText: '&#x3c;Anterior',
-                                            nextText: 'Pr&oacute;ximo&#x3e;',
-                                            currentText: 'Hoje',
-                                            monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
-                                                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-                                            ],
-                                            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                                                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-                                            ],
-                                            dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
-                                            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                            dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                            weekHeader: 'Sm',
-                                            dateFormat: 'dd/mm/yy',
-                                            firstDay: 0,
-                                            isRTL: false,
-                                            showMonthAfterYear: false,
-                                            yearSuffix: ''
-                                        };
-                                        $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
-                                        $.datepicker.setDefaults({
-                                            dateFormat: 'yy-mm-dd',
-                                        })
-                                        $(function() {
-                                            $("#diaInicio").datepicker();
-                                            $("#diaFim").datepicker();
-                                        });
-                                    });
-                                    /*
-									  $('#geraExcelAtendimento').on('submit', function(event) {
-										event.preventDefault();
-
-										var dataInicio = $("#diaInicio").val();
-										var dataFim = $("#diaFim").val();
-
-										$.ajax({
-										  url: 'DAO/geraExcelAtendimento.php',
-										  method: "GET",
-										  data: {
-											atualizar: dataInicio,
-											att: dataFim
-										  },
-										  success: function(data) {
-											window.open(url,'_blank' );
-											alert("Relatório gerado com sucesso");
-										  }
-
-										})
-
-									  })*/
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Atendimentos do dia</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex bd-highlight">
-                            <div class="bd-highlight">
-                                <input type="text" name="dia" id="dia" class="form-control shadow-sm" placeholder="Escolha uma data para visualizar" />
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table id="dataTable" class="table bg-secondary bg-gradient rounded text-white" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="border">CRM</th>
-                                        <th scope="col" class="border">NOME</th>
-                                        <th scope="col" class="border">ANDAR</th>
-                                        <th scope="col" class="border">SALA</th>
-                                        <th scope="col" class="border">MESA</th>
-                                        <th scope="col" class="border">SISTEMA</th>
-                                        <th scope="col" class="border">CRITICIDADE</th>
-                                        <th scope="col" class="border">ERRO</th>
-                                        <th scope="col" class="border">DESCRIÇÃO</th>
-                                        <th scope="col" class="border">STATUS</th>
-                                        <th scope="col" class="border">OBSERVAÇÃO</th>
-                                        <th scope="col" class="border">DIA</th>
-                                        <th scope="col" class="border">MÊS</th>
-                                        <th scope="col" class="border">HORA</th>
-                                        <th scope="col" class="border">TI</th>
-                                        <th scope="col" class="border">
-                                        <th scope="col" class="border">
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    require 'controller/atendimento/research.php';
-                                    readAtendimento();
-                                    ?>
-                        </div>
-
-                    </div>
-                </div>
             </div>
+            <!--CONTA CARACTERES RESTANTES-->
+            <script>
+                $(document).on("input", "#obs", function() {
+                    var limite = 512;
+                    var caracteresDigitados = $(this).val().length;
+                    var caracteresRestantes = limite - caracteresDigitados;
+                    $(".caracteres").text(caracteresRestantes);
+                });
+            </script>
+            <!-- ATUALIZA DADOS GESTAO -->
+            <script>
+                $(document).ready(function(e) {
+                    //e.preventDefault();
+                    $('.updateMedico').on('submit', function(e) {
+                        e.preventDefault();
+                        $("#alert").css('display', 'none');
+                        console.log("Botão Clicado!");
+                        $.ajax({
+                            url: "controller/medico/update.php",
+                            method: "POST",
+                            data: $(this).serialize(),
+                            dataType: "json",
+                            success: function(data) {
+                                if (data[0] == true) {
+                                    $("#success").html('Medico ' + data[1] + ' atualizado com sucesso');
+                                    $("#success").show();
+                                    setTimeout(function() {
+                                        $("#success").hide();
+                                    }, 5000);
+                                }
+                            }
+                        })
+                    });
+                });
+            </script>
         </div>
-        <!-- /.container-fluid -->
-
     </div>
-    <!-- End of Main Content -->
-    <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
+    </div>
     <a class="scroll-to-top rounded" href="#page-top">
+
         <i class="fas fa-angle-up"></i>
     </a>
+
     <!-- MEDICO Modal-->
     <div class="modal fade" id="medicoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -723,14 +560,18 @@ switch ($_SESSION['perfil']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- Bootstrap core JavaScript-->
 
-
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
     <!-- Page level plugins -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.3/af-2.3.7/b-2.1.1/b-html5-2.1.1/date-1.1.1/fh-3.2.0/r-2.2.9/sl-1.3.3/datatables.min.css" />
@@ -750,45 +591,76 @@ switch ($_SESSION['perfil']) {
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 },
+                "searching": false,
                 paging: false,
-                select: true,
-                fixedHeader: true,
-                dom: 'Bfrtip',
                 buttons: [{
-                    extend: 'excel',
-                    title: 'atendimentos do dia',
+                    title: 'Presencas do dia',
                 }],
                 responsive: false
 
             });
         });
     </script>
+
 </body>
 
 </html>
+<!-- /.container-fluid 
+                            
 
-<script>
-    $(document).ready(function() {
-        $.datepicker.setDefaults({
-            dateFormat: 'yy-mm-dd'
-        })
-        $(function() {
-            $("#dia").datepicker();
-        });
-        $("#dia").change(function() {
-            var data = $("#dia").val();
-            $.ajax({
-                url: 'controller/atendimento/research.php',
-                method: "GET",
-                data: {
-                    atualizar: data
-                },
-                success: function(data) {
-                    $('#dataTable').html(data);
-                }
+                            <div class="card shadow ps-0 pe-0 mb-4 border border-success">
+                                <div class="card-header bg-success">
+                                    <h6 class="m-0 font-weight-bold text-white">Gerar relatório</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form action="DAO/geraExcel.php" id="fromExcel" name="fromExcel" method="post">
+                                        <input type="hidden" form="fromExcel" required="" id="diaExcel" name="diaExcel" value=""></input>
+                                        <input type="text" form="fromExcel" required="" name="dia" id="dia" class="form-control mt-2" placeholder="Escolha uma data" />
+                                        <button type="submit" form="fromExcel" id="export" name="export" class="col-12 mt-2 shadow-sm btn btn-success bg-gradient">Gerar excel</button>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $.datepicker.setDefaults({
+                                                    dateFormat: 'yy-mm-dd'
+                                                })
+                                                $(function() {
+                                                    $("#dia").datepicker();
+                                                });
+                                                $("#dia").change(function() {
+                                                    var data = $("#dia").val();
+                                                    $("#diaExcel").val(data);
+                                                    $.ajax({
+                                                        url: 'DAO/presencaDAO.php',
+                                                        method: "GET",
+                                                        data: {
+                                                            atualizar: data
+                                                        },
+                                                        success: function(data) {
+                                                            $('#dataTable').html(data);
+                                                        }
 
-            })
+                                                    })
 
-        })
-    });
-</script>
+                                                })
+                                            });
+                                        </script>
+                                    </form>
+                                </div>
+                            </div>
+-->
+
+<!-- End of Main Content -->
+
+<!-- Footer
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer> -->
+<!-- End of Footer -->
+
+
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
