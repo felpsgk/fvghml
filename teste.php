@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
  
- //require '../codeigniter/vendor/autoload.php';
+ //require '../codeigniter/vendor/autoload.php';a
  
  
 require('/home2/hnrtco66/felps.hnrt.com.br/codeigniter/app/Libraries/PHPExcel.php');
