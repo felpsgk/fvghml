@@ -1,5 +1,5 @@
 <?php
-//session_start();
+//session_start();a
 include 'controller/verificaLogin.php';
 switch ($_SESSION['perfil']) {
     case 'ENFERMEIROvis':
