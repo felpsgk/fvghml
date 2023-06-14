@@ -94,7 +94,7 @@ function readAtendimento()
     while ($row = mysqli_fetch_array($result)) :; ?>
 
         <tr>
-            <form onsubmit="return confirm('Deseja realmente realizar esta ação?')" action="DAO/atendimentoDAO.php" method="POST">
+            <form onsubmit="return confirm('Deseja realmente realizar esta ação?')" action="controller/atendimento/updel.php" method="POST">
                 <input type="hidden" id="id" name="id" value="<?php echo $row['id']; ?>"></input>
 
                 <td scope="row" class="border" style="white-space: nowrap"><?php echo $row['crm'] ?></td>

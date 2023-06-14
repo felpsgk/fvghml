@@ -1,3 +1,4 @@
+<?php
 //session_start();
 
     $servername = "localhost"; /* pode deixar localhost */
@@ -15,8 +16,10 @@
 
     // Checando a conexão com o banco de dados
 
-	@@ -24,4 +23,4 @@
+if ($strcon->connect_error) {
 
-    } 
+        die('Connect Error (' . $strcon->connect_errno . ') ' . $strcon->connect_error);
+
+    }  
 
 ?>

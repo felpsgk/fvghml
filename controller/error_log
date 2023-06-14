@@ -1,0 +1,1 @@
+[08-Nov-2022 10:36:26 America/Fortaleza] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/hnrtco66/felpsti.com.br/fvghml/controller/relatorios.php:37) in /home2/hnrtco66/felpsti.com.br/fvghml/controller/relatorios.php on line 80

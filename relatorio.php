@@ -143,7 +143,6 @@ switch ($_SESSION['perfil']) {
             <div class="sidebar-heading">
                 Visualizar
             </div>
-
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-chart-bar"></i>
@@ -607,7 +606,6 @@ switch ($_SESSION['perfil']) {
 </html>
 <!-- /.container-fluid 
                             
-
                             <div class="card shadow ps-0 pe-0 mb-4 border border-success">
                                 <div class="card-header bg-success">
                                     <h6 class="m-0 font-weight-bold text-white">Gerar relatório</h6>
@@ -637,9 +635,7 @@ switch ($_SESSION['perfil']) {
                                                         success: function(data) {
                                                             $('#dataTable').html(data);
                                                         }
-
                                                     })
-
                                                 })
                                             });
                                         </script>
